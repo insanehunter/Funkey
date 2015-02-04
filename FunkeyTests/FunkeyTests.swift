@@ -8,29 +8,26 @@
 
 import UIKit
 import XCTest
+import Funkey
 
 class FunkeyTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
     func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
+        var diffs = [ArrayDifferenceOperation<TableViewCellState>]()
+        
+        self.measureMetrics(self.dynamicType.defaultPerformanceMetrics(), automaticallyStartMeasuring:false) {
+            srand(123123)
+            let N = 1
+            let states = map(0...N) { _ in randomViewControllerState(minCount: 100, maxCount: 200) }
+            
+            self.startMeasuring()
+            for i in 0..<N {
+                let oldState = states[i]
+                let newState = states[i]
+                let diff = differenceBetween(oldArray: oldState.cells, andNewArray: newState.cells)
+                diffs.extend(diff)
+            }
+            self.stopMeasuring()
         }
+        print(diffs.count)
     }
-    
 }

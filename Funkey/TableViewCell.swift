@@ -1,6 +1,6 @@
 import UIKit
 
-struct TableViewCellState {
+public struct TableViewCellState {
     let identifier: Int
     let subviewOffset: CGFloat
     let backgroundColor: UIColor
@@ -39,14 +39,14 @@ extension TableViewCell: Animatable {
 ////////////// MARK: Equatable
 
 extension TableViewCellState: Equatable {}
-func ==(a: TableViewCellState, b: TableViewCellState) -> Bool {
+public func ==(a: TableViewCellState, b: TableViewCellState) -> Bool {
     return a.identifier == b.identifier
 }
 
 ////////////// MARK: Printable
 
 extension TableViewCellState: Printable {
-    var description: String {
+    public var description: String {
         return "(cell: \(identifier), offset: \(subviewOffset), color: \(backgroundColor))"
     }
 }

@@ -1,14 +1,14 @@
 import UIKit
 
-enum ArrayDifferenceOperation<T> {
+public enum ArrayDifferenceOperation<T> {
     case Insertion(NSIndexPath)
     case Deletion(NSIndexPath)
     case Move((NSIndexPath, NSIndexPath))
     case Update(NSIndexPath)
 }
 
-func differenceBetween<T: Equatable>(# oldArray: [T], andNewArray newArray: [T])
-            -> [ArrayDifferenceOperation<T>] {
+public func differenceBetween<T: Equatable>(# oldArray: [T], andNewArray newArray: [T])
+                    -> [ArrayDifferenceOperation<T>] {
     let deletedObjects = filter(oldArray) { oldItem in
         return find(newArray, oldItem) == nil
     }

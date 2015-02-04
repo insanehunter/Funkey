@@ -1,9 +1,9 @@
 import UIKit
 
-struct ViewControllerState: Printable {
-    let cells: [TableViewCellState]
+public struct ViewControllerState: Printable {
+    public let cells: [TableViewCellState]
     
-    var description: String {
+    public var description: String {
         return cells.description
     }
 }
@@ -78,16 +78,16 @@ extension ViewController: Animatable {
 
 ////////////////// MARK: Misc
 
-func randomViewControllerState() -> ViewControllerState {
-    let MAX_COUNT = 10
-    let MIN_COUNT = 8
+public func randomViewControllerState(minCount: Int = 7,
+                                      maxCount: Int = 10) -> ViewControllerState {
+    assert(maxCount >= minCount)
     
     // Creating cells
-    let count = MIN_COUNT + Int(arc4random_uniform(MAX_COUNT - MIN_COUNT + 1))
+    let count = minCount + Int(rand() % (maxCount - minCount + 1))
     var cells = [TableViewCellState]()
     for i in 0..<count {
-        var offset: CGFloat = (arc4random() % 2) > 0 ? 10 : 286
-        let h: CGFloat = (1.0 / CGFloat(MAX_COUNT) * CGFloat(i))
+        var offset: CGFloat = (rand() % 2) > 0 ? 10 : 286
+        let h: CGFloat = (1.0 / CGFloat(maxCount) * CGFloat(i))
         let color = UIColor(hue: h, saturation: 0.7, brightness: 1, alpha: 1)
         cells.append(TableViewCellState(identifier: i,
                                         subviewOffset: offset,
@@ -96,8 +96,8 @@ func randomViewControllerState() -> ViewControllerState {
     
     // Shuffle
     for i in 0..<count {
-        if arc4random() % 10 == 0 {
-            let i2 = Int(UInt(arc4random()) % UInt(count))
+        if rand() % 10 == 0 {
+            let i2 = Int(UInt(rand()) % UInt(count))
             let a = cells[i]
             cells[i] = cells[i2]
             cells[i2] = a
