@@ -11,9 +11,11 @@
 		43EE5FFC1A82492B0033BBF8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EE5FFB1A82492B0033BBF8 /* ViewController.swift */; };
 		43EE5FFF1A82492B0033BBF8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43EE5FFD1A82492B0033BBF8 /* Main.storyboard */; };
 		43EE60011A82492B0033BBF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43EE60001A82492B0033BBF8 /* Images.xcassets */; };
-		43EE60041A82492B0033BBF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43EE60021A82492B0033BBF8 /* LaunchScreen.xib */; };
 		43EE60101A82492B0033BBF8 /* FunkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EE600F1A82492B0033BBF8 /* FunkeyTests.swift */; };
 		43EE601A1A8249970033BBF8 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EE60191A8249970033BBF8 /* TableViewCell.swift */; };
+		43EE601C1A8274BA0033BBF8 /* Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EE601B1A8274BA0033BBF8 /* Animation.swift */; };
+		43EE601E1A82894D0033BBF8 /* ArrayDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43EE601D1A82894D0033BBF8 /* ArrayDiff.swift */; };
+		43EE60201A82AC9B0033BBF8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43EE601F1A82AC9B0033BBF8 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,11 +35,13 @@
 		43EE5FFB1A82492B0033BBF8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		43EE5FFE1A82492B0033BBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		43EE60001A82492B0033BBF8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		43EE60031A82492B0033BBF8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		43EE60091A82492B0033BBF8 /* FunkeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FunkeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		43EE600E1A82492B0033BBF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43EE600F1A82492B0033BBF8 /* FunkeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunkeyTests.swift; sourceTree = "<group>"; };
 		43EE60191A8249970033BBF8 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		43EE601B1A8274BA0033BBF8 /* Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animation.swift; sourceTree = "<group>"; };
+		43EE601D1A82894D0033BBF8 /* ArrayDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayDiff.swift; sourceTree = "<group>"; };
+		43EE601F1A82AC9B0033BBF8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 		43EE5FEB1A82492B0033BBF8 = {
 			isa = PBXGroup;
 			children = (
+				43EE601F1A82AC9B0033BBF8 /* Default-568h@2x.png */,
 				43EE5FF61A82492B0033BBF8 /* Funkey */,
 				43EE600C1A82492B0033BBF8 /* FunkeyTests */,
 				43EE5FF51A82492B0033BBF8 /* Products */,
@@ -80,12 +85,13 @@
 			isa = PBXGroup;
 			children = (
 				43EE5FF91A82492B0033BBF8 /* AppDelegate.swift */,
-				43EE5FFB1A82492B0033BBF8 /* ViewController.swift */,
 				43EE5FFD1A82492B0033BBF8 /* Main.storyboard */,
 				43EE60191A8249970033BBF8 /* TableViewCell.swift */,
+				43EE5FFB1A82492B0033BBF8 /* ViewController.swift */,
 				43EE60001A82492B0033BBF8 /* Images.xcassets */,
-				43EE60021A82492B0033BBF8 /* LaunchScreen.xib */,
 				43EE5FF71A82492B0033BBF8 /* Supporting Files */,
+				43EE601B1A8274BA0033BBF8 /* Animation.swift */,
+				43EE601D1A82894D0033BBF8 /* ArrayDiff.swift */,
 			);
 			path = Funkey;
 			sourceTree = "<group>";
@@ -196,8 +202,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				43EE5FFF1A82492B0033BBF8 /* Main.storyboard in Resources */,
-				43EE60041A82492B0033BBF8 /* LaunchScreen.xib in Resources */,
 				43EE60011A82492B0033BBF8 /* Images.xcassets in Resources */,
+				43EE60201A82AC9B0033BBF8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,7 +222,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				43EE601A1A8249970033BBF8 /* TableViewCell.swift in Sources */,
+				43EE601E1A82894D0033BBF8 /* ArrayDiff.swift in Sources */,
 				43EE5FFC1A82492B0033BBF8 /* ViewController.swift in Sources */,
+				43EE601C1A8274BA0033BBF8 /* Animation.swift in Sources */,
 				43EE5FFA1A82492B0033BBF8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,14 +254,6 @@
 				43EE5FFE1A82492B0033BBF8 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		43EE60021A82492B0033BBF8 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				43EE60031A82492B0033BBF8 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
