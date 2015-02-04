@@ -1,10 +1,12 @@
 import UIKit
 
-public struct ViewControllerState: Printable {
+public struct ViewControllerState: UIElementState {
+    typealias Difference = [ArrayDifferenceOperation<TableViewCellState>]
+    
     public let cells: [TableViewCellState]
     
-    public var description: String {
-        return cells.description
+    func differenceFrom(state: ViewControllerState) -> Difference {
+        return differenceBetween(oldArray: state.cells, andNewArray: self.cells)
     }
 }
 
@@ -17,9 +19,14 @@ class ViewController: UIViewController {
         state = randomViewControllerState()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.layer.speed = 0.5
+    }
+    
     @IBAction func update(sender: NSObject) {
         let newState = randomViewControllerState()
-        setup(newState, animated: true)
+        update(toState: newState, difference: newState.differenceFrom(state))
     }
 }
 
@@ -33,41 +40,43 @@ extension ViewController: UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath)
             -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as TableViewCell
-        cell.setup(state.cells[indexPath.row], animated: false)
+        cell.reset(state.cells[indexPath.row])
         return cell
     }
 }
 
 ////////////////// MARK: Animatable
 
-extension ViewController: Animatable {
+extension ViewController: UIElement {
     typealias State = ViewControllerState
     
-    func setup(state: State, animated: Bool) {
-        animated ? setupAnimated(state) : setupImmediately(state)
-    }
-    
-    func setupImmediately(state: State) {
+    func reset(state: State) {
         self.state = state
         tableView.reloadData()
     }
     
-    func setupAnimated(state: State) {
-        let diff = differenceBetween(oldArray: self.state.cells, andNewArray: state.cells)
+    func update(toState state: State, difference: State.Difference) {
+        let oldState = self.state
         self.state = state
         tableView.beginUpdates()
-        for change in diff {
+        for change in difference {
             switch change {
             case .Deletion(let indexPath):
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                
             case .Insertion(let indexPath):
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                
             case let .Move(oldIndexPath, newIndexPath):
                 tableView.moveRowAtIndexPath(oldIndexPath, toIndexPath: newIndexPath)
+                
             case .Update(let indexPath):
                 let cell = tableView.cellForRowAtIndexPath(indexPath)
                 if let c = cell as? TableViewCell {
-                    c.setup(state.cells[indexPath.row], animated: true)
+                    let oldCellState = oldState.cells[indexPath.row]
+                    let newCellState = state.cells[indexPath.row]
+                    c.update(toState: newCellState,
+                             difference: newCellState.differenceFrom(oldCellState))
                 }
             }
             
@@ -78,8 +87,19 @@ extension ViewController: Animatable {
 
 ////////////////// MARK: Misc
 
-public func randomViewControllerState(minCount: Int = 7,
-                                      maxCount: Int = 10) -> ViewControllerState {
+extension ViewControllerState: Equatable {}
+public func ==(a: ViewControllerState, b: ViewControllerState) -> Bool {
+    return false
+}
+
+extension ViewControllerState: Printable {
+    public var description: String {
+        return cells.description
+    }
+}
+
+public func randomViewControllerState(minCount: Int = 17,
+                                      maxCount: Int = 20) -> ViewControllerState {
     assert(maxCount >= minCount)
     
     // Creating cells
@@ -96,7 +116,7 @@ public func randomViewControllerState(minCount: Int = 7,
     
     // Shuffle
     for i in 0..<count {
-        if rand() % 10 == 0 {
+        if rand() % 30 == 0 {
             let i2 = Int(UInt(rand()) % UInt(count))
             let a = cells[i]
             cells[i] = cells[i2]

@@ -1,9 +1,16 @@
 import UIKit
 
-public struct TableViewCellState {
-    let identifier: Int
-    let subviewOffset: CGFloat
-    let backgroundColor: UIColor
+public struct TableViewCellState: UIElementState {
+    public let identifier: Int
+    public let subviewOffset: CGFloat
+    public let backgroundColor: UIColor
+    
+    typealias Difference = TableViewCellState
+    func differenceFrom(state: TableViewCellState) -> Difference {
+        return (identifier == state.identifier &&
+                subviewOffset == state.subviewOffset &&
+                backgroundColor == state.backgroundColor) ? self : state;
+    }
 }
 
 class TableViewCell: UITableViewCell {
@@ -13,28 +20,24 @@ class TableViewCell: UITableViewCell {
 
 ////////////// MARK: Animatable
 
-extension TableViewCell: Animatable {
+extension TableViewCell: UIElement {
     typealias State = TableViewCellState
     
-    func setup(state: TableViewCellState, animated:Bool) {
-        animated ? setupAnimated(state) : setupImmediately(state)
-    }
-    
-    func setupAnimated(state: TableViewCellState) {
-        self.contentView.layoutIfNeeded()
-        UIView.animateWithDuration(0.5, delay: 0, options: .BeginFromCurrentState,
-            animations: { () -> Void in
-                self.setupImmediately(state)
-                self.contentView.layoutIfNeeded()
-            }, completion: nil)
-    }
-    
-    func setupImmediately(state: TableViewCellState) {
+    func reset(state: State) {
         offset.constant = state.subviewOffset
         contentView.backgroundColor = state.backgroundColor
     }
+    
+    func update(toState state: State, difference: State.Difference) {
+        self.contentView.layoutIfNeeded()
+        UIView.animateWithDuration(0.5, delay: 0, options: .BeginFromCurrentState,
+            animations: { () -> Void in
+                self.offset.constant = difference.subviewOffset
+                self.contentView.backgroundColor = difference.backgroundColor
+                self.contentView.layoutIfNeeded()
+            }, completion: nil)
+    }
 }
-
 
 ////////////// MARK: Equatable
 
